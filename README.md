@@ -3,7 +3,7 @@
 Small full‑stack web app with authentication and a task dashboard.
 
 - Frontend: React + Vite
-- Backend: Node.js + Express + MongoDB
+- Backend: Node.js + Express + MySQL
 - Auth: JWT, password hashing with bcrypt
 
 ## Running the backend
@@ -12,9 +12,13 @@ From the `backend` folder:
 
 1. Install dependencies
    - `npm install`
-2. Copy `.env.example` to `.env` and adjust values
-   - `MONGODB_URI` should point to a running MongoDB instance
-   - Set a long random string for `JWT_SECRET`
+2. Create a `.env` file with the following variables:
+   - `PORT=5000`
+   - `DB_HOST=127.0.0.1`
+   - `DB_USER=root`
+   - `DB_PASSWORD=your_password`
+   - `DB_NAME=primetrade_app`
+   - `JWT_SECRET=some_long_random_string`
 3. Start the server
    - `npm run dev`
 
@@ -40,6 +44,12 @@ Frontend will run on `http://localhost:5173`.
 - Search and filter tasks by status
 - Logout flow on the dashboard
 
+## Postman collection
+
+- File: `postman/primeTrade.postman_collection.json`
+- Import this collection into Postman.
+- Set a `baseUrl` variable in your Postman environment to `http://localhost:5000`.
+
 ## Production and scaling notes
 
 If this app were prepared for production:
@@ -48,7 +58,7 @@ If this app were prepared for production:
   - Behind a reverse proxy such as Nginx.
   - Environment‑specific config for database and JWT secret.
   - Rate limiting and stricter validation on all endpoints.
-  - Use connection pooling and proper indexes on MongoDB.
+  - Use connection pooling and proper indexes on the MySQL database.
 - **Frontend**
   - Built as static assets with Vite and served from a CDN.
   - Backend URL injected via environment variables at build time.
