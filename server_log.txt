@@ -1,0 +1,27 @@
+npm run dev
+
+> primetrade-backend@1.0.0 dev
+> nodemon src/server.js
+
+[nodemon] 3.1.11
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): *.*
+[nodemon] watching extensions: js,mjs,cjs,json
+[nodemon] starting `node src/server.js`
+Connected to MySQL
+Connected to database
+Server running on port 5000
+GET /api/profile/me 304 78.872 ms - -
+GET /api/tasks 200 66.931 ms - 861
+GET /api/tasks?status=pending&search=final+exams 200 8.944 ms - 12
+POST /api/tasks 201 26.001 ms - 202
+PUT /api/tasks/6 200 9.944 ms - 195
+PUT /api/tasks/6 200 9.061 ms - 198
+DELETE /api/tasks/6 200 7.549 ms - 26
+
+
+
+
+
+
+
