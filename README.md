@@ -67,4 +67,21 @@ If this app were prepared for production:
   - All API calls go through a small `apiClient` layer (already in place), so base URL, headers, and error handling can be adjusted without touching the rest of the UI.
   - Token handling kept in one place (`authStorage`), making it easier to switch to http‑only cookies if needed.
 
+## Frontend–backend integration for production scaling
+
+The app is designed so that the browser never talks directly to the database. All data access goes through the backend API, which exposes a small, stable surface area.
+
+- The **frontend** only knows about the HTTP API (e.g. `/api/auth/login`, `/api/tasks`). It talks to the backend through a central `apiClient` helper that:
+  - Prepends the configured base URL (e.g. `https://api.example.com`).
+  - Attaches the JWT token to the `Authorization` header when the user is logged in.
+  - Normalises error handling so UI components only deal with success/error states, not low‑level network details.
+- The **backend** is a stateless Node.js + Express service that:
+  - Validates and authenticates each request using the JWT.
+  - Uses a MySQL connection pool for efficient queries under load.
+  - Can be scaled horizontally (multiple instances) behind a load balancer, because no user session state is stored in memory.
+- In **production**, this allows us to:
+  - Deploy multiple backend instances and point the frontend’s base URL at the load balancer.
+  - Change the backend host (or move to a new environment) just by updating environment variables, without rebuilding the app logic.
+  - Keep security‑sensitive data (database, JWT secret) on the server side only.
+
 See `backend/API.md` for more detailed endpoint information.
